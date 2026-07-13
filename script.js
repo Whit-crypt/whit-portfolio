@@ -203,6 +203,47 @@ function initBackToTop() {
   });
 }
 
+// ===== CERTIFICATE MODAL =====
+function openCertificateModal(certId) {
+  const modal = document.getElementById('certificate-modal');
+  const contents = modal.querySelectorAll('.cert-content');
+
+  // Hide all certificate contents
+  contents.forEach(content => {
+    content.style.display = 'none';
+  });
+
+  // Show selected certificate
+  const selected = document.getElementById(certId);
+  if (selected) {
+    selected.style.display = 'block';
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCertificateModal() {
+  const modal = document.getElementById('certificate-modal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close modal on outside click
+window.onclick = function(event) {
+  const modal = document.getElementById('certificate-modal');
+  if (event.target === modal) {
+    closeCertificateModal();
+  }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCertificateModal();
+  }
+});
+
 // ===== CONTACT FORM - EMAIL FUNCTIONALITY =====
 function initContactForm() {
   const form = document.getElementById('contact-form');
@@ -258,11 +299,7 @@ function initContactForm() {
       const message = form.querySelector('#message').value;
 
       const mailtoLink = `mailto:whit.adzah@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-        `Name: ${name}
-Email: ${email}
-
-Message:
-${message}`
+        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
       )}`;
 
       window.open(mailtoLink, '_blank');
@@ -364,7 +401,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const texts = [
       'Cybersecurity Enthusiast',
       'AI Education Advocate', 
-      'Future Defender',
       'Tech Community Builder'
     ];
     new TypeWriter(tagline, texts, 80, 2000);
